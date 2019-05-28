@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello Doctor</title>
+</head>
+<body>
+<h1>Blog Form</h1>
+<%
+if(typeof errors !== 'undefined' && errors.length > 0){
+for (var i = 0; i < errors.length; i++) {
+%>
+    <div class="error"><%= errors[i].param %> - <%= errors[i].msg %></div>
+<%
+}
+}
+%>
+<a href="/doctor/blog/list">List Blog</a>
+<form action="<%= action %>" method="post" id="blog-form">
+    <div>
+        Display Name <input type="text" name="displayName">
+    </div>
+    <div>
+        Content <input type="text" name="Content">
+    </div>
+    <div>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </div>
+</form>
+</body>
+</html>

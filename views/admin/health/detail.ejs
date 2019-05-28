@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello Admin</title>
+</head>
+<body>
+<h1>Health Detail</h1>
+<a href="/admin/health/list">List Desease</a>&nbsp;
+<a href="/admin/health/create">Create Desease</a>
+
+<div>
+    Disease Name : <%= disease%>
+</div>
+<div>
+    Cause : <%= cause%>
+</div>
+<div>
+    Consequence : <%= consequence%>
+</div>
+<div>
+    Symptom : <%= symptom%>
+</div>
+<div>
+    Infectious : <%= infectious%>
+</div>
+<div>
+    Side-effect : <%= sideEffect%>
+</div>
+<div>
+    Prevention : <%= prevention%>
+</div>
+<div>
+    Treatment : <%= treatment%>
+</div>
+
+<div>
+    <img src="https://res.cloudinary.com/dakiujeb4/image/upload/v1558595099/<%= imageUrl%>" alt="" style="...">
+</div>
+<div>
+    <a href="/admin/health/edit/<%=_id%>">Edit</a>&nbsp;
+    <a href="#">Delete</a>
+</div>
+</body>
+</html>

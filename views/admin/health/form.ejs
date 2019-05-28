@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello Admin</title>
+</head>
+<body>
+<h1>Health Form</h1>
+<%
+if(typeof errors !== 'undefined' && errors.length > 0){
+for (var i = 0; i < errors.length; i++) {
+%>
+    <div class="error"><%= errors[i].param %> - <%= errors[i].msg %></div>
+<%
+}
+}
+%>
+<a href="/admin/health/list">List Disease</a>
+<form action="<%= action %>" method="post" id="health-form">
+    <div>
+        Disease Name: <input type="text" name="disease" value="<%= obj.disease%>">
+    </div>
+    <div>
+        Cause: <input type="text" name="cause" value="<%= obj.cause%>">
+    </div>
+    <div>
+        Consequence: <input type="text" name="consequence" value="<%= obj.consequence%>">
+    </div>
+    <div>
+        Symptom:<input type="text" name="symptom" value="<%= obj.symptom%>">
+    </div>
+    <div>
+        Infectious:
+        <input type="radio" name="radio" value="1">
+        <label for="radio"> Yes </label>
+        <input type="radio" name="radio" value="0">
+        <label for="radio"> No </label>
+        <div>
+            Side-effect: <input type="text" name="sideeffect" value="<%= obj.sideEffect%>">
+        </div>
+        <div>
+            Prevention:<input type="text" name="prevention" value="<%= obj.prevention%>">
+        </div>
+        <div>
+            Treatment: <input type="text" name="treatment" value="<%= obj.treatment%>">
+        </div>
+        <div>
+            Image <input type="file" name="image">
+            <input type="hidden" name="imageUrl">
+            <img src="" alt="" id="image-preview" style="width: 100px">
+
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </div>
+    </div>
+</form>
+<script>
+    const cloudName = 'dakiujeb4';
+    const unsignedUploadPreset = 'dev20winxp';
+    var img = document.querySelector('[name="image"]');
+
+    img.onchange = function () {
+        var file = this.files[0];
+        var url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var responseDataJson = JSON.parse(this.responseText);
+                console.log(responseDataJson);
+                var imageUrl = document.querySelector('input[name="imageUrl"]');
+                imageUrl.value = responseDataJson.public_id;
+                document.getElementById('image-preview').src = responseDataJson.url;
+            }
+        }
+        xhr.open('POST', url, true);
+        var fd = new FormData();
+        fd.append('upload_preset', unsignedUploadPreset);
+        fd.append('tags', 'browser_upload');
+        fd.append('file', file);
+        xhr.send(fd);
+    }
+</script>
+</body>
+</html>

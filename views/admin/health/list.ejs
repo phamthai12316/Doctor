@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello Admin</title>
+</head>
+<body>
+<div class="header">
+
+    <div>
+        <div>Press something and hit enter to search</div>
+        <form>
+            <div><input type="text" name="keyword" value="<%= keyword %>"></div>
+        </form>
+    </div>
+</div>
+<h1 id="health-heading">List Desease</h1>
+<a href="/admin/health/create">Create new</a>
+<ul>
+    <% for (var i = 0; i < listData.length; i++){ %>
+        <li class="data-item">
+            <%  if (listData[i].imageUrl) {  %>
+                <span><img src="https://res.cloudinary.com/dakiujeb4/image/upload/v1558595099/<%= listData[i].imageUrl %>"
+                           alt=" " style="height: 100px"></span>
+            <%  }   %>
+            <span>
+                <%= listData[i].disease %>
+                <%= listData[i].cause %>
+                <%= listData[i].consequence %>
+                <%= listData[i].symptom %>
+                <%= listData[i].infectious %>
+                <%= listData[i].sideEffect %>
+                <%= listData[i].prevention %>
+                <%= listData[i].treatment %>
+                <%= listData[i].image %>
+
+
+            </span>
+            <span>
+            <a href="/admin/health/detail/<%= listData[i]._id %>">Detail</a>&nbsp;
+            <a href="/admin/health/edit/<%= listData[i]._id %>">Edit</a>&nbsp;
+                <a title="<%= listData[i]._id %>" class="btn-delete" href="#">Delete</a>&nbsp;
+            </span>
+        </li>
+    <% } %>
+</ul>
+<div>
+    <%
+    if(parseInt(page) > 1){
+    %>
+        <span>
+        <a href="/admin/health/list?page=<%= parseInt(page) - 1 %>&limit=<%= limit %>">
+            <%= parseInt(page) - 1 %></a>
+    </span>
+    <%
+    }
+    %>
+    <span><%= page %></span>
+    <%
+    if(parseInt(page) < parseInt(totalPage)){
+    %>
+        <span>
+        <a href="/admin/health/list?page=<%= parseInt(page) + 1 %>&limit=<%= limit %>">
+            <%= parseInt(page) + 1 %></a>
+    </span>
+    <%
+    }
+    %>
+</div>
+<script>
+    var deleteBaseUrl = '/admin/health/delete/<%= listData._id%>';
+    var listBtnDelete = document.getElementsByClassName('btn-delete');
+    for (var i = 0; i < listBtnDelete.length; i++) {
+        listBtnDelete[i].onclick = function () {
+            var requestUrl = '' + deleteBaseUrl + this.title;
+            if (confirm('Are you sure wanna delete this health?')) {
+                var xmlHttpRequest = new XMLHttpRequest();
+                xmlHttpRequest.onreadystatechange = function () {
+                    if (this.status == 200 && this.readyState == 4) {
+                        alert('Delete success');
+                        location.reload();
+                    }
+                };
+                xmlHttpRequest.open('POST', requestUrl, true);
+                xmlHttpRequest.send();
+            }
+            return false
+        }
+    }
+    var searchTextBox = document.querySelector('[name="keyword"]');
+    searchTextBox.onkeypress = function (key) {
+        if (key.keyCode == 13) {
+            var keyword = searchTextBox.value;
+            location.href = '/admin/health/list?keyword=' + keyword;
+        }
+    }
+</script>
+</body>
+</html>

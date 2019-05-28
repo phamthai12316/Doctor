@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello Doctor</title>
+</head>
+<body>
+<h1>Blog Detail</h1>
+<a href="/doctor/blog/list">List Blog</a>&nbsp;
+<a href="/doctor/blog/create">Create Blog</a>
+<div>
+    Display Name: <%= displayName%>
+</div>
+<div>
+    Content: <%- Content%>
+</div>
+
+<div>
+    <img src="https://res.cloudinary.com/dakiujeb4/image/upload/v1558595099/<%= imageUrl%>" alt="" style="...">
+</div>
+<div>
+    <a href="/doctor/blog/edit/<%=_id%>">Edit</a>&nbsp;
+    <a href="#">Delete</a>
+</div>
+</body>
+</html>
